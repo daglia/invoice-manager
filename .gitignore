@@ -80,3 +80,9 @@ next-env.d.ts
 /backend/*.dylib
 /backend/*.test
 /backend/*.out
+
+# Firebase
+/firebase-debug.log
+.firebaserc
+.firebase/
+.firebasehostingcache
