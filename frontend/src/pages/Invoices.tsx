@@ -35,7 +35,7 @@ const columns: ColumnsType<Invoice> = [
     dataIndex: "service_name",
     sorter: true,
     ellipsis: true,
-    width: "33%",
+    width: 180,
   },
   {
     title: "Fatura Numarası",
@@ -55,6 +55,7 @@ const columns: ColumnsType<Invoice> = [
         day: "numeric",
       }),
     width: 180,
+    align: "center",
   },
   {
     title: "Tutar",
@@ -108,18 +109,21 @@ export default function Invoices() {
     pageSize: 10,
     total: 0,
   });
-  const [sorter, _] = useState<SorterResult<Invoice>>({});
+  const [sorter] = useState<SorterResult<Invoice>>({});
   const [search, setSearch] = useState<string>("");
 
-  const fetchData = (params: any = {}) => {
+  const fetchData = (params: {
+    pagination: TablePaginationConfig;
+    sorter: SorterResult<Invoice>;
+  }) => {
     setLoading(true);
-    const { current, pageSize } = params.pagination;
-    const { field, order } = params.sorter;
+    const { current = 1, pageSize = 10 } = params.pagination;
+    const { field = "id", order } = params.sorter;
 
     const query = new URLSearchParams({
       page: current.toString(),
       pageSize: pageSize.toString(),
-      sortField: field || "id",
+      sortField: field.toString(),
       sortOrder: order === "ascend" ? "asc" : "desc",
       search: search,
     });
